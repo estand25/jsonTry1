@@ -34,27 +34,26 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         GenreAPIService service = retrofit.create(GenreAPIService.class);
-        Call<JSONArray> jsonArrayCall = service.readJsonArray();
-        jsonArrayCall.enqueue(new Callback<JSONArray>() {
+        Call<JSONObject> jsonArrayCall = service.readJsonArray();
+        jsonArrayCall.enqueue(new Callback<JSONObject>() {
             @Override
-            public void onResponse(Call<JSONArray> call, Response<JSONArray> response) {
-                String Genre2 = "";
-                for(int i = 0;i <response.body().length();i++) {
-                    try {
-                        JSONObject Genres1 = response.body().getJSONObject(i);
-                        Log.e("onResponse",Genres1.getString("id"));
-                        Log.e("onResponse",Genres1.getString("name"));
-                        Genre2 = Genres1.getString("name");
-                    }catch (JSONException e){
-                        Log.e("onResponse", e.getMessage().toString());
+            public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
+                try {
+                    JSONObject genrelist = new JSONObject(response.body().toString());
+                    JSONArray genreArray = genrelist.getJSONArray("results");
+                    for(int i = 0; i< genreArray.length();i++){
+                        JSONObject genreInfo = genreArray.getJSONObject(i);
+                        Log.e("onResponse", genreInfo.getString("id"));
+                        Log.e("onResponse", genreInfo.getString("name"));
+
                     }
+                } catch (JSONException e) {
+                    Log.e("onFailure", e.getMessage().toString());
                 }
-                TextView textView = (TextView) findViewById(R.id.message);
-                textView.setText(Genre2);
             }
 
             @Override
-            public void onFailure(Call<JSONArray> call, Throwable t) {
+            public void onFailure(Call<JSONObject> call, Throwable t) {
                 Log.e("onFailure", t.toString());
             }
         });
