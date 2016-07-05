@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
                         Log.e("onResponse", genreInfo.getString("name"));
 
                     }
+                    //Log.e("onResponse", response.body().getString("id").toString());
+                    //Log.e("onResponse", response.body().getString("name").toString());
                 } catch (JSONException e) {
                     Log.e("onFailure", e.getMessage().toString());
                 }
