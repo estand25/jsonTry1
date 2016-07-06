@@ -1,14 +1,18 @@
 package com.example.andriod.jsontry1;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Movie {
+public class Movie implements Parcelable {
 
     @SerializedName("poster_path")
     @Expose
@@ -78,7 +82,9 @@ public class Movie {
      * @param video
      * @param popularity
      */
-    public Movie(String posterPath, Boolean adult, String overview, String releaseDate, List<Integer> genreIds, Integer id, String originalTitle, String originalLanguage, String title, String backdropPath, Double popularity, Integer voteCount, Boolean video, Double voteAverage) {
+    public Movie(String posterPath, Boolean adult, String overview, String releaseDate, List<Integer> genreIds,
+                 Integer id, String originalTitle, String originalLanguage, String title, String backdropPath, Double popularity,
+                 Integer voteCount, Boolean video, Double voteAverage) {
         this.posterPath = posterPath;
         this.adult = adult;
         this.overview = overview;
@@ -94,6 +100,63 @@ public class Movie {
         this.video = video;
         this.voteAverage = voteAverage;
     }
+
+    // had to look this up online for the boolean field
+    // found a soluation on StackOverflow.com
+    // http://stackoverflow.com/questions/6201311/how-to-read-write-a-boolean-when-implementing-the-parcelable-interface
+    Movie(Parcel in){
+        posterPath = in.readString();
+        adult = in.readByte() !=0;
+        overview = in.readString();
+        releaseDate = in.readString();
+        genreIds = (List<Integer>) in.readSerializable();
+        id = in.readInt();
+        originalTitle = in.readString();
+        originalLanguage = in.readString();
+        title = in.readString();
+        backdropPath = in.readString();
+        popularity = in.readDouble();
+        voteCount = in.readInt();
+        video = in.readByte() !=0;
+        voteAverage = in.readDouble();
+    }
+
+    @Override
+    public int describeContents() {return 0;}
+
+    // had to look this up online for the boolean field
+    // found a soluation on StackOverflow.com
+    // http://stackoverflow.com/questions/6201311/how-to-read-write-a-boolean-when-implementing-the-parcelable-interface
+    @Override
+    public void writeToParcel(Parcel parcel, int i){
+        parcel.writeString(posterPath);
+        parcel.writeByte((byte) (adult ? 1:0));
+        parcel.writeString(overview);
+        parcel.writeString(releaseDate);
+        Serializable sGentid = (Serializable) getGenreIds();
+        parcel.writeSerializable(sGentid);
+        parcel.writeInt(id);
+        parcel.writeString(originalTitle);
+        parcel.writeString(originalLanguage);
+        parcel.writeString(title);
+        parcel.writeString(backdropPath);
+        parcel.writeDouble(popularity);
+        parcel.writeInt(voteCount);
+        parcel.writeByte((byte) (video? 1:0));
+        parcel.writeDouble(voteAverage);
+    }
+
+    public final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>(){
+        @Override
+        public Movie createFromParcel(Parcel parcel){
+            return new Movie(parcel);
+        }
+
+        @Override
+        public Movie[] newArray(int i){
+            return new Movie[i];
+        }
+    };
 
     /**
      * Get the Post path for the movie
