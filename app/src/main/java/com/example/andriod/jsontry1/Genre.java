@@ -1,6 +1,8 @@
 package com.example.andriod.jsontry1;
 
 //import javax.annotation.Generated;
+import android.content.Intent;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -15,7 +17,7 @@ public class Genre {
     private String name;
 
     /**
-     *
+     * Returns the genre id in integer
      * @return
      * The id
      */
@@ -24,7 +26,7 @@ public class Genre {
     }
 
     /**
-     *
+     * Set the Genre id
      * @param id
      * The id
      */
@@ -33,7 +35,7 @@ public class Genre {
     }
 
     /**
-     *
+     *  Get the Genre Name
      * @return
      * The name
      */
@@ -42,7 +44,7 @@ public class Genre {
     }
 
     /**
-     *
+     * Set the Genre name
      * @param name
      * The name
      */
@@ -50,4 +52,7 @@ public class Genre {
         this.name = name;
     }
 
+    public String getNameFromId(Integer id){
+        return name;
+    }
 }

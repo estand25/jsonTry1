@@ -14,7 +14,7 @@ public class Genres {
     private List<Genre> genres = new ArrayList<Genre>();
 
     /**
-     *
+     *  Returns a List of Genres
      * @return
      * The genres
      */
@@ -23,7 +23,7 @@ public class Genres {
     }
 
     /**
-     *
+     * Set a list of Genres
      * @param genres
      * The genres
      */
