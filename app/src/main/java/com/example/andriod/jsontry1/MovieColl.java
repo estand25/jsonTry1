@@ -13,7 +13,7 @@ public class MovieColl {
     private List<Movie> results = new ArrayList<Movie>();
 
     /**
-     *
+     * Get the list of movies
      * @return
      * The results
      */
@@ -22,7 +22,7 @@ public class MovieColl {
     }
 
     /**
-     *
+     * Set the List of movies
      * @param results
      * The results
      */

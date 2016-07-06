@@ -35,5 +35,10 @@ public interface TheMovieDBAPIService {
     );
 
     // List of Specified movie Reviews
+    @GET("movie/{id}/reviews")
+    Call<ReviewColl> getMovieReview(
+            @Path("id") Integer id,
+            @Query("api_key") String api_key
+    );
 
 }

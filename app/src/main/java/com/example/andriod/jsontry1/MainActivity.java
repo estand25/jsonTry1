@@ -85,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         id_video = 99861;
-        id_review = 99861;
         Call<TrailerColl> jsonMovieTrailer = service.getMovieTrailer(id_video,api_key);
         jsonMovieTrailer.enqueue(new Callback<TrailerColl>() {
             @Override
@@ -103,5 +102,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        id_review = 99861;
+        Call<ReviewColl> jsonMovieReview = service.getMovieReview(id_review,api_key);
+        jsonMovieReview.enqueue(new Callback<ReviewColl>() {
+            @Override
+            public void onResponse(Call<ReviewColl> call, Response<ReviewColl> response) {
+                List<Review> movieReviews = response.body().getReviews();
+
+                for(Review review : movieReviews){
+                    Log.v("OnResponse - Review",review.getId()+" "+review.getAuthor());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ReviewColl> call, Throwable t) {
+                Log.e("onFailure", t.toString());
+            }
+        });
     }
 }
