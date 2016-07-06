@@ -13,7 +13,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
-    private String api_key = "d2919c2333e0f291ccf58c5e5ec88543";
+    private String api_key = "You're Own Movie DB API Key";
     private Integer id_video;
     private Integer id_review;
 
